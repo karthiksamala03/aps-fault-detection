@@ -14,7 +14,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
-download  data csv file
+download  data csv file from git
 ```
 wget https://raw.githubusercontent.com/avnyadav/sensor-fault-detection/main/aps_failure_training_set1.csv
+```
+
+common git commands
+```
+git push origin main
+```
+or
+force push, code to github
+```
+git push origin main -f
+```
+
+pull
+```
+git pull origin main
 ```
