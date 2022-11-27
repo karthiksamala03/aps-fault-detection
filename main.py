@@ -1,13 +1,16 @@
 import os,sys
 from sensor.logger import logging
 from sensor.exception import SensorException
+from sensor.entity import config_entity
+from sensor.components.data_ingestion import DataIngestion
 
 if __name__=="__main__":
-     logging.info("This is my first logging")
      try:
-          logging.info("performing div operation")
-          result = 3/0
-          print(result)
-          logging.info("operation successfully completed")
+          training_pipeline_config = config_entity.TrainingPipelineConfig()
+          data_ingestion_config = config_entity.DataIngestionConfig(training_pipeline_config)
+          print(data_ingestion_config.__dict__())
+          data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
+          print(data_ingestion.initiate_data_ingestion())
+          
      except Exception as e:
-          logging.info(f"Error message {e}")
+          raise SensorException(e, sys)
