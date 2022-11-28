@@ -27,7 +27,7 @@ class DataIngestion:
 
             logging.info("replacing na with np.NAN")
             #replacing na with np.NAN
-            df.replace(to_replace=na, value=np.NAN, inplace=True)
+            df.replace(to_replace='na', value=np.NAN, inplace=True)
 
             logging.info("Save Data in Feature Store")
             #Create feature Store folder is not avaiable
@@ -38,7 +38,7 @@ class DataIngestion:
 
             logging.info("Create dataset folder is not avaiable")
             #Create dataset folder is not avaiable
-            dataset_dit = os.path.dirname(self.data_ingestion_config.train_file_path)
+            dataset_dir = os.path.dirname(self.data_ingestion_config.train_file_path)
             os.makedirs(name=dataset_dir,exist_ok=True)
 
             logging.info("Split dataset into trian and test")
