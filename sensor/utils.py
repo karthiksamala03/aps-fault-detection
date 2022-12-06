@@ -3,6 +3,7 @@ from sensor.logger import logging
 from sensor.exception import SensorException
 from sensor.config import mongo_client
 import pandas as pd
+import numpy as np
 import yaml
 import dill
 
