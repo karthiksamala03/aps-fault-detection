@@ -34,7 +34,7 @@ class DataValidation:
         """
         try:
             threshold = self.data_validation_config.missing_threshold
-            null_report = np.na().sum()/df.shape[0]
+            null_report = df.isna().sum()/df.shape[0]
 
             logging.info(f"selecting column names which contains null values above {threshold}")
             droping_columns_names = null_report[null_report>0.2].index
@@ -86,15 +86,15 @@ class DataValidation:
                 logging.info(f"{base_column} : base_datatype = {base_data.dtype}, current_datatype = {current_data.dtype}")
                 distribution = ks_2samp(base_data, current_data)
 
-                # Same Distribution if pvalue > 0.05 else Diff distribution
-                if distibution.pvalue>0.05:
+                # Same distribution if pvalue > 0.05 else Diff distribution
+                if distribution.pvalue>0.05:
                     drift_report[base_column] = {
-                        'p-value' : float(distibution.pvalue),
+                        'p-value' : float(distribution.pvalue),
                         'same distribution' : True
                     }
                 else:
                     drift_report[base_column] = {
-                        'p-value' : float(distibution.pvalue),
+                        'p-value' : float(distribution.pvalue),
                         'same distribution' : False
                     }
 
@@ -105,10 +105,10 @@ class DataValidation:
 
     def initiate_data_validation(self)->artifact_entity.DataValidationArtifact:
         try:
-            logging.info(f"reafing base dataframe")
+            logging.info(f"reading base dataframe")
             base_df = pd.read_csv(self.data_validation_config.base_file_path)
-            logging.info("replacin NAN values in base df")
-            base_df.replace({'na':np.NAN}, inplace=True)
+            logging.info("replacing NAN values in base df")
+            base_df.replace({"na":np.NAN}, inplace=True)
 
             logging.info("Drop null value columns from base df")
             base_df = self.drop_missing_values_columns(df=base_df, report_key_name='missing_values_within_base_dataset')
