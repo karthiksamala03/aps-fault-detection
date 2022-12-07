@@ -80,16 +80,16 @@ def load_numpy_array_data(file_path:str)->np.array:
     except Exception as e:
         raise SensorException(e, sys)
 
-def save_object(file_path:str, obj:object)->None:
+def save_object(file_path: str, obj: object) -> None:
     try:
-        logging.info("Entering into save_object method of utils")
-        dir_path = os.path.dirname(file_path)
-        os.makedirs(dir_path,exist_ok = True)
-        with (file_path,"wb") as file_obj:
+        logging.info("Entered the save_object method of utils")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "wb") as file_obj:
             dill.dump(obj, file_obj)
-        logging.info("Exiting from save_object method of utils")
+        logging.info("Exited the save_object method of utils")
     except Exception as e:
-        raise SensorException(e, sys)
+        raise SensorException(e, sys) from e
+
 
 def load_object(file_path:str)->object:
     try:

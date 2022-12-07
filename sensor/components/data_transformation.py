@@ -55,11 +55,11 @@ class DataTransformation:
             #Label Encoding Target feature
             logging.info("Performing LabelEncoding")
             label_encoder = LabelEncoder()
-            label_encoder.fit(input_feature_train_df)
+            label_encoder.fit(target_feature_train_df)
 
             #transformation on Target column
-            target_feature_train_arr = label_encoder.transform(input_feature_train_df)
-            target_feature_test_arr = label_encoder.transform(input_feature_test_df)
+            target_feature_train_arr = label_encoder.transform(target_feature_train_df)
+            target_feature_test_arr = label_encoder.transform(target_feature_test_df)
 
             logging.info("Creating Transformation Pipeline Object")
             transformation_pipeline = DataTransformation.get_data_transformer_object()
@@ -80,8 +80,8 @@ class DataTransformation:
             logging.info(f"After resampling in testing set Input:{input_feature_test_arr.shape} Target:{target_feature_test_arr.shape}")
 
             #concate train and test arrays
-            train_arr = np.c_(input_feature_train_arr, target_feature_train_arr)
-            test_arr = np.c_(input_feature_test_arr, target_feature_test_arr)
+            train_arr = np.c_[input_feature_train_arr, target_feature_train_arr]
+            test_arr = np.c_[input_feature_test_arr, target_feature_test_arr]
 
             #Save numpy array
             logging.info(f"Saving Numpy arrays")
@@ -89,7 +89,7 @@ class DataTransformation:
             utils.save_numpy_array_data(file_path=self.data_transformation_config.transformed_test_path, array=test_arr)
 
             #Saving Trnasformation Pipeline
-            logging.info("Saving Trnasformation Pipeline")
+            logging.info("Saving Transformation Pipeline")
             utils.save_object(file_path=self.data_transformation_config.transform_object_path, obj=transformation_pipeline)
 
             #Saving LabelEncoder
