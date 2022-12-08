@@ -75,7 +75,7 @@ def load_numpy_array_data(file_path:str)->np.array:
     try:
         if not os.path.exists(path=file_path):
             raise Exception(f"The file : {file_path} not exist")
-        with (file_path,"rb") as file_obj:
+        with open(file_path,"rb") as file_obj:
             return np.load(file_obj)
     except Exception as e:
         raise SensorException(e, sys)
@@ -95,7 +95,7 @@ def load_object(file_path:str)->object:
     try:
         if not os.path.exists(path=file_path):
             raise Exception(f"The file : {file_path} not exist")
-        with (file_path,"rb") as file_obj:
+        with open(file_path,"rb") as file_obj:
             return dill_load(file_obj)
     except Exception as e:
         raise SensorException(e, sys)
