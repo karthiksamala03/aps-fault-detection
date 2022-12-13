@@ -1,4 +1,4 @@
-import os
+import os, sys
 from sensor.logger import logging
 from sensor.exception import SensorException
 from typing import Optional
@@ -65,29 +65,29 @@ class ModelResolver:
     def get_latest_save_dir_path(self)->Optional[str]:
         try:
             latest_dir = self.get_latest_dir_path()
-            if len(dir_names) == 0:
-                return None
-            latest_dir_num = int(os.path.basename(latest_dir))
+            if latest_dir == None:
+                return os.path.join(self.model_registy, f"{0}")
+            latest_dir_num = int(os.path.basename(self.get_latest_dir_path()))
             return os.path.join(self.model_registy,f"{latest_dir_num+1}")
 
         except Exception as e:
             raise SensorException(e, sys)
 
-    def get_latest_model_path(self)->Optional[str]:
+    def get_latest_save_model_path(self)->Optional[str]:
         try:
             latest_dir = self.get_latest_save_dir_path()
             return os.path.join(latest_dir,self.model_dir_name,MODEL_FILE_NAME)
         except Exception as e:
             raise SensorException(e, sys)
 
-    def get_latest_transformer_path(self)->Optional[str]:
+    def get_latest_save_transformer_path(self)->Optional[str]:
         try:
             latest_dir = self.get_latest_save_dir_path()
             return os.path.join(latest_dir,self.transformer_dir_name,TRANSFORMATOR_OBJECT_FILE_NAME)
         except Exception as e:
             raise SensorException(e, sys)
 
-    def get_latest_target_encoder_path(self)->Optional[str]:
+    def get_latest_save_target_encoder_path(self)->Optional[str]:
         try:
             latest_dir = self.get_latest_save_dir_path()
             return os.path.join(latest_dir,self.target_encoder_dir_name,TARGET_ENCODER_OBJECT_FILE_NAME)

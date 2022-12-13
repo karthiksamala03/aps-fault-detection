@@ -7,6 +7,7 @@ from sensor.components.data_validation import DataValidation
 from sensor.components.data_transformation import DataTransformation
 from sensor.components.model_trainer import ModelTrainer
 from sensor.components.model_evaluation import ModelEvaluation
+from sensor.components.model_pusher import Model_Pusher
 
 
 if __name__=="__main__":
@@ -49,5 +50,13 @@ if __name__=="__main__":
           model_eval_artifact = model_eval.initiate_model_evaluation()
           print(model_eval_artifact)
           
+          #Model Pusher
+          model_pusher_config=config_entity.ModelPusherConfig(training_pipeline_config=training_pipeline_config)
+          model_pusher = Model_Pusher(model_pusher_config=model_pusher_config,
+                     data_transformation_artifact=data_transformation_artifact,
+                     model_trainer_artifact=model_trainer_artifact)
+          model_pusher_artifact = model_pusher.initiate_model_pusher()
+          print(model_pusher_artifact)
+
      except Exception as e:
           raise SensorException(e, sys)
