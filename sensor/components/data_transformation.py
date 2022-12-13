@@ -17,7 +17,7 @@ class DataTransformation:
     def __init__(self,data_transformation_config:config_entity.DataTransformationConfig
                 ,data_ingestion_artifact:artifact_entity.DataIngestionArtifact):
         try:
-            logging.info(f"{'>>' * 20} Data Transformation {'<<'*20}")
+            logging.info(f"{'>>'* 20} Data Transformation {'<<'*20}")
             self.data_transformation_config=data_transformation_config
             self.data_ingestion_artifact=data_ingestion_artifact
         except Exception as e:
@@ -26,11 +26,11 @@ class DataTransformation:
     @classmethod
     def get_data_transformer_object(cls)->Pipeline:
         try:
-            simpleimputer = SimpleImputer(strategy='constant', fill_value=0)
-            robustscaler = RobustScaler()
+            simple_imputer = SimpleImputer(strategy='constant', fill_value=0)
+            robust_scaler = RobustScaler()
             pipeline = Pipeline(steps = [
-                        ('Imputer', simpleimputer),
-                        ('scaler', robustscaler)
+                        ('Imputer', simple_imputer),
+                        ('scaler', robust_scaler)
                         ])
             return pipeline
         except Exception as e:
@@ -70,7 +70,7 @@ class DataTransformation:
             input_feature_test_arr = transformation_pipeline.transform(input_feature_test_df)
 
             logging.info("Performing Samping on both Train and Test data")
-            smt = SMOTETomek(sampling_strategy='auto', random_state=42)
+            smt = SMOTETomek(random_state=42)
             logging.info(f"Before resampling in training set Input:{input_feature_train_arr.shape} Target:{target_feature_train_arr.shape}")
             input_feature_train_arr,target_feature_train_arr = smt.fit_resample(input_feature_train_arr, target_feature_train_arr)
             logging.info(f"After resampling in training set Input:{input_feature_train_arr.shape} Target:{target_feature_train_arr.shape}")

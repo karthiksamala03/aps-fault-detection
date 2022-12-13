@@ -27,10 +27,10 @@ class ModelEvaluation:
 
     def initiate_model_evaluation(self,)->artifact_entity.ModelEvaluationArtifact:
         try:
-            # if saved model folder as model then will compare 
+            # if saved model folder has model, then will compare 
             # which model is best, the model trained or the model from the saved model folder
 
-            logging.info("if saved model folder as model then will compare "
+            logging.info("if saved model folder has model, then will compare "
                 "which model is best, the model trained or the model from the saved model folder")
             latest_dir_path = self.model_resolver.get_latest_dir_path()
             if latest_dir_path == None:
@@ -70,9 +70,9 @@ class ModelEvaluation:
             logging.info(f"Accuracy using previous trained model : {previous_model_score}")
 
             # Accuracy using Current trained model
-            input_feature_names = list(transformer.feature_names_in_)
+            input_feature_names = list(current_transformer.feature_names_in_)
             input_arr = current_transformer.transform(test_df[input_feature_names])
-            y_pred = model.predict(input_arr)
+            y_pred = current_model.predict(input_arr)
             y_true = current_target_encoder.transform(target_df)
             print(f"Prediction using current model :{current_target_encoder.inverse_transform(y_pred[:5])}")
             current_model_score = f1_score(y_true=y_true, y_pred=y_pred)
@@ -89,5 +89,3 @@ class ModelEvaluation:
 
         except Exception as e:
             raise SensorException(e, sys)
-
-
