@@ -11,6 +11,7 @@ demotest.py
 logs
 artifacts
 raw_data
+sensor.egg-info
 # Distribution / packaging
 .Python
 build/
